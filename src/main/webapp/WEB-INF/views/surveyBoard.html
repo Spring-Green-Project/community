@@ -227,7 +227,7 @@
         <li th:text="${post.hit}" class="column5"/>
         </td>
     </ul>
-<div class="paging" th:if="${noticeList!=null}">
+<div class="paging" th:if="${surveyList!=null}">
     <ul class="pagination justify-content-center" id="pageUl"
         th:with="start=${T(Math).floor(surveyList.number/10)*10 + 1},
                     last=(${start + 9 < surveyList.totalPages ? start + 9 : surveyList.totalPages})">

@@ -203,7 +203,7 @@
         <li class="column4" th:text="${post.regDate}"/>
         <li class="column5" th:text="${post.views}"/>
     </ul>
-<div class="paging" th:if="${noticeList!=null}">
+<div class="paging" th:if="${serviceList!=null}">
     <ul class="pagination justify-content-center" id="pageUl"
         th:with="start=${T(Math).floor(serviceList.number/10)*10 + 1},
                     last=(${start + 9 < serviceList.totalPages ? start + 9 : serviceList.totalPages})">

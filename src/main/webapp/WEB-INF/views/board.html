@@ -227,7 +227,7 @@
     <input type="text" id="value2" name="searchValue" th:field="*{searchValue}"/>
     <input type="button" id="searchButton2" value="검색"/>
 </form>
-<div class="paging" th:if="${noticeList!=null}">
+<div class="paging" th:if="${postList!=null}">
     <ul class="pagination justify-content-center" id="pageUl"
         th:with="start=${T(Math).floor(postList.number/10)*10 + 1},
                     last=(${start + 9 < postList.totalPages ? start + 9 : postList.totalPages})">
