@@ -46,9 +46,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
-public class PostController {
+public class PostController{
     //파일 저장경로
     @Resource(name = "uploadPostPath")
     String path;
@@ -374,11 +375,19 @@ public class PostController {
         PostDto dto = new PostDto();
         PostDto postDto = dto.changePostDto(post);
 
+        File file = new File(path, Objects.requireNonNull(uploadFile.getOriginalFilename())); // 파일 입력
+
+        try{
+            uploadFile.transferTo(file);
+        }catch (Exception e){
+            System.out.println("파일 전송 실패");
+        }
         postDto.setContent(content);
         postDto.setCategory(post.getCategory());
         postDto.setTitle(title);
         postDto.setName(name);
         postDto.setPw(post.getPw());
+        postDto.setFileName(uploadFile.getOriginalFilename());
 
         postService.update(postDto);
         return "redirect:/post?postNo="+postDto.getPostNo();

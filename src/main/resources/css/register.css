@@ -1,3 +1,5 @@
+
+@import url(https://fonts.googleapis.com/css?family=BenchNine:700);
 .snip1535 {
     background-color: #2C85B1;
     border: none;
@@ -134,8 +136,18 @@ input{
     background-color: #23698B;
     color: #fff;
 }
-button{
+.snip1535{
     margin-right: 15%;
 
     display: flex;
 }
+
+.modal{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.8);
+    top:0;
+    left:0;
+    display:none; }
+

@@ -3,6 +3,7 @@ package com.okay.service;
 
 import com.okay.domain.entity.*;
 import com.okay.domain.repository.*;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;

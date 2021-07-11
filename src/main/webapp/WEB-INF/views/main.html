@@ -4,123 +4,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Main</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
     <script th:src="@{../js/jquery.js}" type="text/javascript"></script>
     <script src="https://kit.fontawesome.com/afd6aa68df.js" crossorigin="anonymous"></script>
-    <!--    <link th:href="@{./css/main.css}" rel="stylesheet" type="text/css"/>-->
-    <style>
-
-        ul{
-            list-style:none;
-        }
-        li{
-            text-align: center
-        }
-        a {
-            text-decoration:none;
-        }
-        /*   nav ul {
-               list-style: none;
-               border-top: 1px solid #23698b;
-               border-bottom: 1px solid #23698b;
-               text-align: center;
-               background-color: #232f32;
-           } */
-
-        nav ul li {
-            display: inline;
-            letter-spacing: .3em;
-            margin-left: 2em;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            line-height: 3em;
-        }
-        #sessiontag {
-            position: absolute;
-            top: 0px;
-            right: 35px;
-        }
-        #sessiontag1{
-            position: absolute;
-            top: 0px;
-            right: 35px;
-
-        }
-        #sessiontag1>a{
-            color: #cdcdcd;
-        }
-
-        #sessiontag>a{
-            color: #cdcdcd;
-        }
-        #okaytitle{
-            color:#cdcdcd;
-        }
-        #headertop{
-            background-color: #131921;
-        }
-        #nav2 {
-            background-color:#232f32;
-
-        }
-        #nav2 li>a{
-            display: inline;
-            color: white;
-        }
-        body{
-            margin: 0;
-            padding: 0;
-            background-color: #c1dad6 !important;
-        }
-        .box{
-            position: absolute;
-            top: 60%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-        }
-        .input {
-            padding: 10px;
-            width: 80px;
-            height: 80px;
-            background: white;
-            border: 5px solid #7c7c7c;
-            border-radius: 50px;
-            box-sizing: border-box;
-            font-size: 20px;
-            font-weight: bold;
-            color: #7c7c7c;
-            transition: .5s;
-        }
-        .box:hover input{
-            width: 350px;
-            background: none;
-            border-radius: 50px;
-        }
-        i{
-            position: absolute;
-            top: 50%;
-            right: 25px;
-            transform: translate(-50%,-50%);
-            font-size: 15px;
-            color: #87cbc3;
-            transition: .2s;
-        }
-        .box:hover i {
-            opacity: 0;
-            z-index: -1;
-        }
-        #searchFilter{
-            display: none;
-        }
-
-    </style>
+        <link th:href="@{./css/main.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <header th:insert="/header.html"></header>
@@ -139,7 +30,6 @@
 <script th:inline="javascript">
 
     let session =[[${session}]];
-
     $(document).ready(function (){
         if(session.userId === 1){
             alert("관리자 계정입니다.");

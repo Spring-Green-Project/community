@@ -1,0 +1,79 @@
+
+ul{
+    list-style:none;
+}
+a {
+    text-decoration:none;
+}
+nav ul li {
+    display: inline;
+    letter-spacing: .3em;
+    margin-left: 2em;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    line-height: 3em;
+}
+#mypage{
+    list-style-type: none;
+    float: left;
+    margin: 0;
+    padding: 15px;
+    width: 230px;
+    height: 600px;
+    background-color: white;
+}
+#mypage li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+#mypage li a.active {
+    background-color: #3B5998   ;
+    color: white;
+}
+#mypage li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+.myChart{
+    position: absolute;
+    top : 350px;
+    left : 900px;
+}
+.myAllChart{
+    position: absolute;
+    top: 364px !important;
+    left: 380px !important;
+}
+.myCommentChart{
+    position: absolute;
+    top: 350px !important;
+    left : 1400px !important;
+}
+h1{
+    position: absolute;
+    left: 960px;
+    top:150px;
+}
+hr{
+    position: absolute;
+    left: 955px;
+    width: 250px;
+    top: 200px;
+    border: 3px solid #131921 !important;
+}
+#adminRegisterChart{
+    position: absolute;
+    top : 20px;
+    left : 500px;
+}
+#adminFileChart{
+    position: absolute;
+    top : 20px;
+    left : 1000px;
+}
+

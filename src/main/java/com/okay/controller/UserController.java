@@ -24,8 +24,7 @@ import java.util.List;
 
 @ComponentScan(basePackages = {"com.okay.service"})
 @Controller
-public class UserController extends Exception{
-
+public class UserController {
     @Autowired
     UserService userService;
     @Autowired
@@ -40,6 +39,7 @@ public class UserController extends Exception{
     @GetMapping("/")
     public String main(HttpServletRequest request){ // 첫 진입시 Main 화면
         HttpSession session = userService.sessionAutowired(request);
+        session.setAttribute("userId", session.getAttribute("userId"));
         return "main";
     }
     //세션제거

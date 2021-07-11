@@ -1,0 +1,128 @@
+
+body{
+    position: absolute !important;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+}
+ul{
+    list-style:none;
+}
+li{
+    text-align: center
+}
+a {
+    text-decoration:none;
+}
+nav ul li {
+    display: inline;
+    letter-spacing: .3em;
+    margin-left: 2em;
+}
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    line-height: 3em;
+}
+#sessiontag1>a{
+    color: #cdcdcd;
+}
+
+#sessiontag>a{
+    color: #cdcdcd;
+}
+#okaytitle{
+    color:#cdcdcd;
+}
+#headertop{
+    background-color: #131921;
+}
+#nav2 {
+    background-color:#232f32;
+
+}
+#nav2 li>a {
+    display: inline;
+    color: white;
+}
+h3 {
+    position: absolute !important;
+    top: 110px;
+    left: 350px;
+    font-weight: bold !important;
+    font-family: "Franklin Gothic Demi";
+}
+.table {
+    position: absolute !important;
+    width: 800px !important;
+    top: 225px;
+    left: 350px;
+    right: 350px;
+}
+.table ul {
+    text-align: center;
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+    display: table;
+}
+.table .main li{
+    font-weight: bold;
+    border-bottom: #c1dad6 solid 2.5px;
+    text-align: center;
+    display: inline-block;
+    padding-bottom: 7px;
+}
+.table .mainContent li{
+    font-size: smaller;
+    border-bottom: darkgray solid 1.5px;
+    display: inline-block;
+    list-style-type: none;
+    border-collapse: collapse;
+    padding: 7px;
+}
+.table ul .column1 {
+    width: 20px
+}
+.table ul .column2 {
+    width: 370px
+}
+.table ul .column3 {
+    width: 170px
+}
+.table ul .column4 {
+    width: 130px
+}
+.table ul .column5{
+    width: 110px;
+}
+.paging{
+    position: absolute !important;
+    right: 600px;
+    left: 600px;
+    top: 650px;
+}
+.searchForm{
+    position: absolute !important;
+    top: 160px;
+    left: 900px;
+    width:700px; height:0px;
+}
+#searchButton{
+    border-radius: 10px;
+    background-color: #b2b2b2;
+    color: white;
+    padding: 1.5px 3.2px;
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,0.21);
+    border-bottom-color: rgba(0,0,0,0.34);
+    text-shadow:0 1px 0 rgba(0,0,0,0.15);
+}
+#searchButton:active{
+    top: 1px;
+    border-color: rgba(0,0,0,0.34) rgba(0,0,0,0.21) rgba(0,0,0,0.21);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.89),0 1px rgba(0,0,0,0.05) inset;
+}
+#searchFilter{
+    display: none;
+}

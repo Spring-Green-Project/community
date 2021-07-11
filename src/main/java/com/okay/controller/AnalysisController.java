@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Collections;
 
 @Controller
-public class AnalysisController {
+public class AnalysisController{
     @Autowired
     AnalysisService analysisService;
 
     @GetMapping("/about")
     public String about(HttpServletRequest request, Model model){
+
         HttpSession session = request.getSession();
         Long userNo = Long.valueOf(String.valueOf(session.getAttribute("userId")));
         if(userNo>2){

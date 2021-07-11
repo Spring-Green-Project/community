@@ -99,6 +99,7 @@
           <element id="library" level="project" name="Gradle: net.minidev:accessors-smart:1.2" />
           <element id="library" level="project" name="Gradle: org.ow2.asm:asm:5.0.4" />
           <element id="library" level="project" name="Gradle: org.junit.jupiter:junit-jupiter-engine:5.7.0" />
+          <element id="library" level="project" name="Gradle: org.springframework:springloaded:1.2.8.RELEASE" />
         </element>
       </element>
     </root>

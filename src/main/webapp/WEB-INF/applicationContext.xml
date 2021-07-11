@@ -18,6 +18,7 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
         </property>
+
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
@@ -32,11 +33,11 @@
         <property name="username" value="okay"/>
         <property name="password" value="okay"/>
     </bean>
-                                 <!--MySQL -->
+
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
-
+                        <!--MySQL -->
 <!--    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
 <!--        <property name="dataSource" ref="dataSource" />-->
 <!--        <property name="packagesToScan" value="com.okay.domain" />-->

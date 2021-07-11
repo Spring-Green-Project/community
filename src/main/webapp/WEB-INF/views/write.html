@@ -6,30 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <title>board</title>
+  <link th:href="@{./css/write.css}" rel="stylesheet"/>
+  <title>글 작성</title>
 
-  <style>
-    body {
-      padding-top: 70px;
-      padding-bottom: 30px;
-    }
-    #category {
-      padding-top: 10px;
-      padding-bottom: 20px;
-    }
-    #title {
-      padding-top: 20px;
-    }
-    #content {
-      height: 200px;
-    }
-    #uploadFile {
-      padding-top: 10px;
-      padding-bottom: 30px;
-    }
-  </style>
 </head>
 <body>
+
 <article>
   <div class="container" role="main">
     <h2>board Form</h2>
@@ -41,34 +23,34 @@
 
       <div class="mb-3">
         <label for="title">제목</label>
-        <input type="text" class="form-control" name="title" id="title">
+        <input type="text" maxlength="26" class="form-control" name="title" id="title">
       </div>
 
       <th:block th:if="${session.userId == 1}">
         <div class="mb-3">
           <label for="adminName">작성자</label>
-          <input type="text" maxlength="10" class="form-control" name="name" id="adminName" th:value="${name}" readonly>
+          <input type="text" maxlength="20" class="form-control" name="name" id="adminName" th:value="${name}" readonly>
         </div>
       </th:block>
 
       <th:block th:if="${session.userId > 2}">
         <div class="mb-3">
           <label for="userName">작성자</label>
-          <input type="text" maxlength="10" class="form-control" name="name" id="userName" th:value="${name}" readonly>
+          <input type="text" maxlength="20" class="form-control" name="name" id="userName" th:value="${name}" readonly>
         </div>
       </th:block>
 
       <th:block th:if="${session.userId == 2}">
         <div class="mb-3">
           <label for="name">작성자</label>
-          <input type="text" maxlength="10" class="form-control" name="name" id="name">
+          <input type="text" maxlength="20" class="form-control" name="name" id="name">
         </div>
       </th:block>
 
       <div class="mb-3">
         <label for="content">내용</label>
-        <textarea name="content" class="form-control" id="content" placeholder="내용을 입력해 주세요"></textarea>
-        <input type="file" name="uploadFile" id="uploadFile" accept="image/jpg, image/jpeg, image/png, image/gif" >
+        <textarea name="content" maxlength="1000" class="form-control" id="content" placeholder="내용을 입력해 주세요"></textarea>
+        <input type="file" name="uploadFile" maxlength="15" id="uploadFile" accept="image/jpg, image/jpeg, image/png, image/gif" >
       </div>
 
       <th:block th:if="${session.userId == 1}">
@@ -105,21 +87,24 @@
 
   $(document).ready(function (){
 
-    $('#btnSave').click(()=>{
-      if($("input[name='title']").val().length<2 ){
+    $('#btnSave').click(()=> {
+
+      if ($("input[name='title']").val().length < 2) {
         alert("제목은 2글자 이상 입력해주세요.");
         $('#form').preventDefault();
-      }else if($("input[name='name']").val().length<2){
+      } else if ($("input[name='name']").val().length < 2) {
         alert("이름은 2글자 이상 입력해주세요.");
         $('#form').preventDefault();
-      }else if($("input[name='pw']").val().length <= 0) {
+      } else if ($("input[name='pw']").val().length <= 0) {
         alert("비밀번호는 4글자 이상 입력해주세요.");
         $('#form').preventDefault();
-      }else{
+      } else {
         $('#form').submit();
       }
     })
+
   })
+
 
 </script>
 

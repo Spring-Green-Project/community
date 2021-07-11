@@ -53,9 +53,11 @@ public class UserService extends Service {
     public HttpSession sessionAutowired(HttpServletRequest request) {
         HttpSession session = request.getSession();
         if (session.getAttribute("userId") == null) {
+            System.out.println(session.getAttribute("userId"));
             session.setAttribute("userId", 2);
             return session;
         } else {
+            System.out.println(session.getAttribute("userId"));
             return session;
         }
     }

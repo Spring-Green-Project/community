@@ -37,7 +37,7 @@ import java.util.List;
 
 @ComponentScan(basePackages = {"com.okay.service"})
 @Controller
-public class SurveyContoller {
+public class SurveyContoller{
     @Autowired
     SurveyService surveyService;
     @Autowired
@@ -108,7 +108,7 @@ public class SurveyContoller {
     }
 
     @GetMapping("surveyBoard")
-    public String listSurvey(Model model, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "20") int size, SearchDto searchDto) {
+    public String listSurvey(HttpServletRequest request, Model model, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "20") int size, SearchDto searchDto) {
         Pageable pageable = PageRequest.of(page - 1, size, Sort.by("surveyNo").descending()); // 0부터 담기기때문에..-1 requestparam->페이징 받아줌
         Page<Survey> surveyList = surveyService.getSurveyList(pageable, searchDto);
         model.addAttribute("surveyList", surveyList);

@@ -7,166 +7,7 @@
           crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <title>게시글 상세 페이지</title>
-
-    <style>
-        body {
-            padding-bottom: 30px;
-        }
-
-        #category {
-            padding-top: 10px;
-            padding-bottom: 20px;
-        }
-
-        #title {
-            padding-top: 20px;
-        }
-
-        #content {
-            height: 200px;
-        }
-
-        #uploadFile {
-            padding-top: 10px;
-            padding-bottom: 30px;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        li {
-            text-align: center
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        /*   nav ul {
-               list-style: none;
-               border-top: 1px solid #23698b;
-               border-bottom: 1px solid #23698b;
-               text-align: center;
-               background-color: #232f32;
-           } */
-
-        nav ul li {
-            display: inline;
-            letter-spacing: .3em;
-            margin-left: 2em;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            line-height: 3em;
-        }
-
-        #sessiontag1 > a {
-            color: #cdcdcd;
-        }
-
-        #sessiontag > a {
-            color: #cdcdcd;
-        }
-
-        #nav2 li > a {
-            display: inline;
-            color: white;
-        }
-
-        @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
-        strong {
-            color: #58ba83;
-        }
-
-        label {
-            display: table-cell;
-            vertical-align: middle;
-            text-align: center;
-            cursor: pointer;
-            background-color: #919191;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 3px;
-            transition: none;
-        }
-
-        button {
-            background: #36A2D7;
-            color: #fff;
-            border: none;
-            position: relative;
-            height: 60px;
-            font-size: 1.6em;
-            padding: 0 2em;
-            cursor: pointer;
-            transition: 800ms ease all;
-            outline: none;
-        }
-
-        button:before, button:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 2px;
-            width: 0;
-            background: #36A2D7;
-            transition: 400ms ease all;
-        }
-
-        button:after {
-            right: inherit;
-            top: inherit;
-            left: 0;
-            bottom: 0;
-        }
-
-        #main {
-            width: 60%;
-            margin-left: 20%;
-            height: 500px;
-
-        }
-
-        .title {
-            font-weight: bold;
-        }
-
-
-        .postContent {
-
-
-        }
-
-        .agora {
-            position: relative;
-            margin-top: 3%;
-            width: 60%;
-            margin-left: 20%;
-            height: 500px;
-        }
-        header{
-            margin-bottom: 50px;
-        }
-        h6{
-            width: 100%;
-        }
-        #pagingTable{
-            position: relative;
-            left: 510px;
-        }
-        a {
-            text-decoration:none;
-        }
-
-
-        span a:link { font-size:20px; color: black; text-decoration: none;}
-        span a:visited { color: black; text-decoration: none;}
-        span a:hover { color: royalblue; text-decoration: underline;}
-    </style>
+    <link th:href="@{./css/post.css}" rel="stylesheet"/>
 </head>
 <body>
 <header th:insert="/header.html"></header>
@@ -182,7 +23,7 @@
         <input type="button" class="btn btn-sm btn-primary" id="boardButton" value="목록"/>
     </h3>
 
-    <h3 class="postContent"><img id="img" src="" width="" height="">[[${post.content}]]</h3>
+    <h3 class="postContent"><img id="img" src="" width="300" height="300">[[${post.content}]]</h3>
 
 
 
@@ -209,9 +50,7 @@
                     <!--comment-->
                     <table id="commentTable" style='margin-top: 5px;'>
                         <thead>
-                        <th>내용</th>
-                        <th>날짜</th>
-                        <th >이름</th>
+
 
                         </thead>
                         <tbody>
@@ -239,9 +78,6 @@
                         <a th:each="presentPage : ${#numbers.sequence(startAt, endBy)}"
                            th:href="@{/post(postNo=${post.postNo}, presentPage=${presentPage})}"
                            th:text=|[${presentPage}]|></a>
-                    </span>
-                                            <span th:if="${commentPaging.totalPage} == 0">
-                        Comments not exist
                     </span>
                                             <a th:if="${commentPaging.endBy} + 1 < ${commentPaging.totalPage}"
                                                th:href="@{/post(postNo = ${post.postNo}, presentPage = ${commentPaging.startAt} + 5)}"
@@ -292,23 +128,28 @@
 <script th:inline="javascript">
     let img = [[${img}]];
     let post = [[${post}]];
+    let session = [[${session}]];
 
     let file = "./post/"+img;
     $(document).ready(function (){
         if(img===""){
             $("#img").hide();
-        }
-
-        if($(".postContent").val().length<100){
-            $("#img").prop("width", 200);
-            $("#img").prop("height", 200);
-            $("#img").attr("src",file);
         }else{
-            $("#img").prop("width", 300);
-            $("#img").prop("height", 300);
             $("#img").attr("src",file);
         }
 
+        if(post.category=="service"){
+            if(post.userNo.userNo==session.userId){
+
+            }else if(session.userId==1) {
+
+            }else{
+                alert("권한이 없습니다.");
+                location.href="/service";
+            }
+        }else{
+
+        }
 
     })
 

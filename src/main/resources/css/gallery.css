@@ -1,0 +1,118 @@
+
+article{
+    /*position: relative;*/
+}
+a {
+    text-decoration:none;
+}
+a.okaya:link { color: black; text-decoration: none;}
+a.okaya:visited { color: black; text-decoration: none;}
+a.okaya:hover { color: royalblue; text-decoration: underline;}
+
+/*   nav ul {
+       list-style: none;
+       border-top: 1px solid #23698b;
+       border-bottom: 1px solid #23698b;
+       text-align: center;
+       background-color: #232f32;
+   } */
+h5 {
+    padding-bottom: 5%;
+    border-bottom: 2.5px solid royalblue;
+}
+
+.post ul li {
+    height: 40px;
+}
+
+.notice_container {
+    float: right;
+
+    width: 23%;
+    text-align: left;
+}
+
+.survey_container{
+    float: right;
+
+    width: 23%;
+    text-align: left;
+}
+
+.post_container {
+    float: left;
+
+    width: 25%;
+    text-align: left;
+}
+#sessiontag {
+    position: absolute;
+    top: 0px;
+    right: 35px;
+}
+#sessiontag1{
+    position: absolute;
+    top: 0px;
+    right: 35px;
+
+}
+#sessiontag1>a{
+    color: #cdcdcd;
+}
+
+#sessiontag>a{
+    color: #cdcdcd;
+}
+#okaytitle{
+    color:#cdcdcd;
+}
+#headertop{
+    background-color: #131921;
+}
+#nav2 {
+    background-color:#232f32;
+
+}
+#nav2 li>a{
+    display: inline;
+    color: white;
+}
+
+
+.post_container{
+    position: absolute;
+    top : 500px;
+    width: 300px;
+    left : 220px;
+
+}
+.survey_container{
+    position: absolute;
+    width: 300px;
+    top : 500px;
+    left : 750px;
+}
+.notice_container{
+    position: absolute;
+    width: 300px;
+    top : 500px;
+    left : 1250px;
+}
+.openApi{
+    position: absolute;
+    top : 150px;
+    left : 420px;
+    width: 1000px;
+    height: 300px;
+
+}
+#coronaChart{
+    position: absolute;
+    left : 600px;
+    top : -5px;
+}
+h3{
+    position: absolute;
+    top : 165px;
+    left : 820px;
+}

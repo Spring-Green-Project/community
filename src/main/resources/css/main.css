@@ -62,7 +62,7 @@ nav ul li a {
 body{
     margin: 0;
     padding: 0;
-    background-color: #c4d6cf;
+    background-color: #c1dad6 !important;
 }
 .box{
     position: absolute;
@@ -75,13 +75,13 @@ body{
     width: 80px;
     height: 80px;
     background: white;
-    border: 6px solid #8ac9bf;
+    border: 5px solid #7c7c7c;
     border-radius: 50px;
-    box-sizing: border-box;
     font-size: 20px;
     font-weight: bold;
-    color: #8ac9bf;
+    color: #7c7c7c;
     transition: .5s;
+    outline: none;
 }
 .box:hover input{
     width: 350px;
@@ -94,7 +94,7 @@ i{
     right: 25px;
     transform: translate(-50%,-50%);
     font-size: 15px;
-    color: #8ac9bf;
+    color: #87cbc3;
     transition: .2s;
 }
 .box:hover i {
@@ -104,3 +104,7 @@ i{
 #searchFilter{
     display: none;
 }
+form#search  {
+    border: 0px solid #c1dad6;
+}
+
