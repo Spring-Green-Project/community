@@ -3,10 +3,7 @@ package com.okay.controller;
 import com.okay.domain.entity.Post;
 import com.okay.domain.entity.Survey;
 import com.okay.domain.entity.User;
-import com.okay.dto.CommentDto;
-import com.okay.dto.Paging;
-import com.okay.dto.PostDto;
-import com.okay.dto.SearchDto;
+import com.okay.dto.*;
 import com.okay.service.CommentService;
 import com.okay.service.PostService;
 import com.okay.service.SurveyService;
@@ -16,11 +13,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -93,8 +93,12 @@ public class PostController{
     @GetMapping("/gallery")
     public String gallaryList(Model model) {
         List<Post> cntList = postService.postCntFive("off"); //poslist limit5 orderbyviews desc
-        List<Post> noticeList = postService.postCnt("on"); //noticeist limit5 orderbyviews desc
+        List<Post> noticeList = postService.postCntFive("on"); //noticeist limit5 orderbyviews desc
         List<Survey> surveyList = surveyService.surveyListfive(); //poslist limit5 orderbyviews desc
+
+        model.addAttribute("post",cntList);
+        model.addAttribute("notice",noticeList);
+        model.addAttribute("survey",surveyList);
 
 
         return "gallery";
@@ -305,6 +309,46 @@ public class PostController{
 
         return "redirect:/post?postNo=" + postNo;
     }
+
+
+    //ajax 댓글 생성
+    @ResponseBody
+    @PostMapping("/commentPost")
+    public ResponseEntity commentPost(HttpServletRequest request, @Param("postNo")Long postNo, String name
+            ,String pw ,String content, String regDate){
+        HttpSession session = userService.sessionAutowired(request);
+        Long userNo = Long.valueOf(String.valueOf(session.getAttribute("userId")));
+        System.out.println(userNo);
+        System.out.println(content);
+        System.out.println(regDate);
+        System.out.println();
+        String flag = "";
+        User user = userService.selectOne(userNo);
+        Post post = postService.selectOne(postNo);
+        CommentDto dt= new CommentDto();
+        try{
+            dt.setCommentNo(commentService.max()+1L);
+        }catch (Exception e){
+            dt.setCommentNo(1L);
+        }
+        CommentDto dto = CommentDto.builder()
+                .commentNo(dt.getCommentNo())
+                .userNo(user)
+                .postNo(post)
+                .name(name)
+                .content(content)
+                .regDate(now)
+                .pw(pw)
+                .build();
+        commentService.create(dto);
+        if(dto != null){
+        flag = "true";
+        } else{
+            flag = "false";
+        }
+        return ResponseEntity.ok(flag);
+    }
+
 
     @PostMapping("/removeComment")
     public String deleteComment(Long commentNo, Long postNo) {

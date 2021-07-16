@@ -186,7 +186,7 @@ public class UserController {
     public String activeMenu(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         Long userNo = Long.valueOf(String.valueOf(session.getAttribute("userId")));
-        if(userNo == 2 ){
+        if(userNo == 2){
             return "redirect:/gallery";
         }
         User user = userService.selectOne(userNo);

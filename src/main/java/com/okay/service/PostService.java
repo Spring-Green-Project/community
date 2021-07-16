@@ -145,11 +145,6 @@ public class PostService extends Service{
         return list;
     }
 
-    public List<Post> postCnt(String category){
-        List<Post> postGalleryOrder = postRepository.findFirst5ByCategoryOrderByViewsDesc(category);
-        return postGalleryOrder;
-    }
-
     public List<Post> postCntFive(String category){
         List<Post> postGalleryOrderFive = postRepository.findFirst5ByCategoryOrderByViewsDesc(category);
 

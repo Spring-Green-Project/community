@@ -2,10 +2,12 @@ package com.okay.service;
 
 import com.okay.domain.entity.Comment;
 import com.okay.domain.entity.Post;
+import com.okay.domain.entity.SurveyComment;
 import com.okay.domain.entity.User;
 import com.okay.domain.repository.CommentRepository;
 import com.okay.dto.CommentDto;
 import com.okay.dto.Paging;
+import com.okay.dto.SurveyCommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
@@ -146,6 +148,16 @@ public class CommentService extends Service{
     public void deleteAll(Long postNo) {
         Optional<Post> post = postRepository.findById(postNo);
         commentRepository.deleteAllByPostNo(post.get());
+    }
+
+    public Long max(){
+        BigDecimal max = commentRepository.max();
+        Long no = Long.valueOf(String.valueOf(max));
+        return no;
+    }
+    public void create(CommentDto commentDto){ // CREATE
+        Comment comment = commentDto.changeComment(commentDto);
+        commentRepository.save(comment);
     }
 
 
