@@ -62,6 +62,7 @@ public class PostController{
     @Autowired
     SurveyService surveyService;
     LocalDateTime time = LocalDateTime.now();
+
     // 오늘 날짜
     LocalDate today = LocalDate.now();
     LocalDate yesterday = LocalDate.now().minusDays(1);
@@ -94,121 +95,7 @@ public class PostController{
         List<Post> cntList = postService.postCntFive("off"); //poslist limit5 orderbyviews desc
         List<Post> noticeList = postService.postCnt("on"); //noticeist limit5 orderbyviews desc
         List<Survey> surveyList = surveyService.surveyListfive(); //poslist limit5 orderbyviews desc
-        BufferedReader br = null;
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware(true);
-        DocumentBuilder builder;
-        Document doc = null;
 
-        if(Long.parseLong(String.valueOf(time.getHour()))<8){
-            now = last;
-        }
-
-        try {
-            String urlStr ="http://apis.data.go.kr/1480523/MetalMeasuringResultService/MetalService?serviceKey=pygR8TY6ssILm9rtlqhq%2BuhPL8jhCkpVKBKWFtg8TPzXmf5cDVqYDbZgp4KkadbTjNd7G1reUFUZjVn8BfPbiQ%3D%3D&pageNo=1&numOfRows=12&resultType=XML&date="+now+"&stationcode=1&itemcode=90303&timecode=RH02";
-
-            URL url = new URL(urlStr);
-
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-            urlConnection.setRequestMethod("GET");
-
-            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
-            String result = "";
-            String line = "";
-
-            result = br.readLine();
-            while ((line = br.readLine()) != null) {
-                result = result + line + "\n";
-            }
-
-            System.out.println("Sucress");
-
-            // xml 파싱하기
-            InputSource is = new InputSource(new StringReader(result));
-
-            builder = factory.newDocumentBuilder();
-            doc = builder.parse(is);
-            XPathFactory xpathFactory = XPathFactory.newInstance();
-            XPath xpath = xpathFactory.newXPath();
-            // XPathExpression expr = xpath.compile("/response/body/items/item");
-            XPathExpression expr = xpath.compile("//items/item");
-            NodeList nodeList = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
-
-            String[] timeArr = new String[nodeList.getLength()];
-            String[] contentArr = new String[nodeList.getLength()];
-
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                NodeList child = nodeList.item(i).getChildNodes();
-
-                for (int j = 0; j < child.getLength(); j++) {
-                    Node node = child.item(j);
-                    if(node.getNodeName().equals("sdate")){
-                        timeArr[i] = node.getTextContent().substring(8,10);
-                    }
-                    if(node.getNodeName().equals("value")){
-                        contentArr[i] = node.getTextContent();
-                    }
-                }
-            }
-
-
-            urlStr = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=pygR8TY6ssILm9rtlqhq%2BuhPL8jhCkpVKBKWFtg8TPzXmf5cDVqYDbZgp4KkadbTjNd7G1reUFUZjVn8BfPbiQ%3D%3D" +
-                    "&pageNo=1&numOfRows=10&startCreateDt="+now+"&endCreateDt="+now;
-            url = new URL(urlStr);
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
-            result = "";
-            line = "";
-
-            while ((line = br.readLine()) != null) {
-                result = result + line + "\n";
-            }
-            System.out.println("Sucress");
-
-            is = new InputSource(new StringReader(result));
-
-            builder = factory.newDocumentBuilder();
-            doc = builder.parse(is);
-
-            xpathFactory = XPathFactory.newInstance();
-            xpath = xpathFactory.newXPath();
-            // XPathExpression expr = xpath.compile("/response/body/items/item");
-            expr = xpath.compile("//items/item");
-            nodeList = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
-
-            String[] divisionArr = new String[nodeList.getLength()];
-            String[] contentArr2 = new String[nodeList.getLength()];
-
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                NodeList child = nodeList.item(i).getChildNodes();
-
-                for (int j = 0; j < child.getLength(); j++) {
-                    Node node = child.item(j);
-
-                    if(node.getNodeName().equals("gubun")){
-                        divisionArr[i] = node.getTextContent();
-                    }
-                    if(node.getNodeName().equals("incDec")) {
-                        contentArr2[i] = node.getTextContent();
-                    }
-                }
-
-            }
-            model.addAttribute("num", contentArr2[contentArr2.length-1]);
-            model.addAttribute("day", now);
-            model.addAttribute("timeArr", timeArr);
-            model.addAttribute("contentArr", contentArr);
-            model.addAttribute("division",divisionArr);
-            model.addAttribute("cnt",contentArr2);
-            model.addAttribute("post", cntList);
-            model.addAttribute("notice", noticeList);
-            model.addAttribute("survey", surveyList);
-        } catch (Exception e) {
-            System.out.println("Fail");
-            System.out.println(e.getMessage());
-        }
 
         return "gallery";
     }
