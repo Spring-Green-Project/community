@@ -75,7 +75,9 @@
 </form>
 <script th:inline="javascript">
 
+    if ([[${session.userId}]] == [[${img.userNo.userNo}]] || [[${session.userId}]] == 1) {
     document.querySelector('#deleteButton').addEventListener('click', deleteSurvey);
+    }
     function deleteSurvey() {
         let deleteForm = document.querySelector('#deleteButton');
         let deleteConfirm = confirm("게시글을 삭제하시겠습니까?");
@@ -84,6 +86,7 @@
             $("#deleteForm").submit();
         }
     }
+
     $(document).ready(function () {
         let list = [[${comment}]];
 
