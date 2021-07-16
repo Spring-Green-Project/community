@@ -30,30 +30,36 @@ public class PostService extends Service{
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
     String now = today.format(formatter);
 
-
-
-    public void create(PostDto postDto){
+    public void create(PostDto postDto){ // DTO를 받아 DB 저장
         Post post = postDto.changePost(postDto);
         postRepository.save(post);
     }
 
-    public void update(PostDto postDto){
+    public void update(PostDto postDto){ // DTO를 받아 DB 갱신
         Post post = postDto.changePost(postDto);
         postRepository.save(post);
     }
 
-    public PostDto selectOne(PostDto postDto){
-        Post post = postDto.changePost(postDto);
+    public PostDto selectOne(PostDto postDto){ // DTO를 받아 findByid
         Optional<Post> temp = postRepository.findById(postDto.getPostNo());
-        PostDto result = postDto.changePostDto(temp.get());
-        return result;
+        if(temp.isPresent()){
+            PostDto result = postDto.changePostDto(temp.get());
+            return result;
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
 
-    public Post selectOne(Long id){
-        Optional<Post> result = postRepository.findById(id);
-        return result.get();
+    public Post selectOne(Long id){ // id를 받아 findById
+        Optional<Post> temp = postRepository.findById(id);
+        if(temp.isPresent()){
+            return temp.get();
+        }else{
+            throw new IllegalArgumentException();
+        }
     }
-public List<PostDto> selectAll(){
+
+    public List<PostDto> selectAll(){
         PostDto postDto = new PostDto();
         List<Post> temp = postRepository.findAll();
         List<PostDto> result = new ArrayList<>();

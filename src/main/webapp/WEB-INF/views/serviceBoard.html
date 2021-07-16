@@ -9,7 +9,7 @@
         <link th:href="@{./css/serviceBoard.css}" rel="stylesheet"/>
     <script src="https://kit.fontawesome.com/fd1e0c1830.js" crossorigin="anonymous"></script>
     <script th:src="@{../js/jquery.js}" type="text/javascript"></script>
-    <script th:src="@{../js/serviceBoard.js}" type="text/javascript"></script>
+
 </head>
 <body>
 <header th:insert="/header.html"></header>
@@ -80,6 +80,20 @@
         </ul>
     </div>
 </div>
+    <script th:inline="javascript">
 
+
+        document.querySelector('#searchButton').addEventListener('click', searchButtonSubmit);
+
+        function searchButtonSubmit(){
+            if (document.querySelector('#value').value.length == 0 ){
+                alert ("검색어를 입력하세요");
+            } else {
+                document.querySelector('#searchForm').submit();
+            }
+        }
+
+
+    </script>
 </body>
 </html>
