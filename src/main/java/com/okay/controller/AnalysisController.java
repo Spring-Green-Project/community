@@ -19,6 +19,10 @@ public class AnalysisController{
 
         HttpSession session = request.getSession();
         Long userNo = Long.valueOf(String.valueOf(session.getAttribute("userId")));
+        //비회원의 mypage 접근차단
+        if(userNo == 2){
+            return "redirect:/gallery";
+        }
         if(userNo>2){
             // User의 데이터 분석
             int[] allCnt = analysisService.calculateAll(userNo);

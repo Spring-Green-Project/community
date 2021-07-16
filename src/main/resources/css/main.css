@@ -107,4 +107,10 @@ i{
 form#search  {
     border: 0px solid #c1dad6;
 }
+img{
+    position: absolute;
+    top: 15%;
+    left: 520px;
+    right: 520px;
+}
 
