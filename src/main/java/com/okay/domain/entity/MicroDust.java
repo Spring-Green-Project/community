@@ -1,12 +1,10 @@
 package com.okay.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,5 +20,5 @@ public class MicroDust {
     @Column(name = "reg_date")
     String regDate;
 
-    Long value;
+    String value;
 }
