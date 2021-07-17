@@ -175,6 +175,11 @@ public class SurveyContoller{
                 .content(content)
                 .regDate(now)
                 .build();
+//        if(dto.getId()==null){
+//            dto.setId(1L);
+//        }else{
+//            dto.setId(surveyCommentService.max()+1L);
+//        }
         surveyCommentService.create(dto);
         flag = "true";
         return ResponseEntity.ok(flag);

@@ -58,7 +58,7 @@
     <div class="post">
         <ul th:each="survey:${survey}" class="list-group list-group-flush">
             <li class="list-group-item">
-                <a class="okaya" href="#" th:href="@{/choice(surveyNo=${surveyNo})}"
+                <a class="okaya" th:href="@{/choice(surveyNo=${survey.surveyNo})}"
                    th:text="${survey.title}"></a>
                 <text th:text="${survey.startTime}"/>
                 <text th:text="${survey.name}"/>
