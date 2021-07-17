@@ -76,7 +76,7 @@
 </form>
 <script th:inline="javascript">
     if ([[${session.userId}]] == [[${img.userNo.userNo}]] || [[${session.userId}]] == 1) {
-        document.querySelector('#deleteButton').addEventListener('click', deleteSurvey);
+    document.querySelector('#deleteButton').addEventListener('click', deleteSurvey);
     }
     function deleteSurvey() {
         let deleteForm = document.querySelector('#deleteButton');
@@ -90,7 +90,7 @@
     $('#listButton').click(function (){
         self.location = "/surveyBoard";
     })
-    $(document).ready(function () {
+  $(document).ready(function () {
         let list = [[${comment}]];
 
 

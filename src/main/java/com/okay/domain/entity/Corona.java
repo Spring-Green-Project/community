@@ -24,5 +24,5 @@ public class Corona {
 
     String region;
 
-    Long value;
+    String value;
 }
