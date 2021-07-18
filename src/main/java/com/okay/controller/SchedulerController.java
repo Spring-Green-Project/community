@@ -1,7 +1,9 @@
 package com.okay.controller;
 
+import com.okay.domain.entity.Corona;
 import com.okay.domain.entity.MicroDust;
-import com.okay.service.SchedulerService;
+import com.okay.service.CoronaService;
+import com.okay.service.MicroDustService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -29,7 +31,10 @@ import java.time.format.DateTimeFormatter;
 public class SchedulerController { // 정기적으로 반복 작업을 수행하는 Controller
 
     @Autowired
-    SchedulerService schedulerService;
+    MicroDustService microDustService;
+
+    @Autowired
+    CoronaService coronaService;
 
     // 오늘 날짜
     LocalDate today = LocalDate.now();
@@ -43,13 +48,13 @@ public class SchedulerController { // 정기적으로 반복 작업을 수행하
     DocumentBuilder builder;
     Document doc = null;
 
-    @Scheduled(fixedDelay = 10000) // 1시간에 한번 갱신 3600000
-    public void microDust(){
+    @Scheduled(cron = "0 0 0/1 * * *") // 1시간에 한번 갱신
+    public void microDust(){ // 미세먼지 API
 
         factory.setNamespaceAware(true);
 
         try {
-            // Open API 호출출
+            // Open API 호출
            String urlStr ="http://apis.data.go.kr/1480523/MetalMeasuringResultService/MetalService?serviceKey=pygR8TY6ssILm9rtlqhq%2BuhPL8jhCkpVKBKWFtg8TPzXmf5cDVqYDbZgp4KkadbTjNd7G1reUFUZjVn8BfPbiQ%3D%3D&pageNo=1&numOfRows=12&resultType=XML&date="+now+"&stationcode=1&itemcode=90303&timecode=RH02";
 
             URL url = new URL(urlStr);
@@ -90,37 +95,76 @@ public class SchedulerController { // 정기적으로 반복 작업을 수행하
 
                     microDust.setId((long) j);
                     if(node.getNodeName().equals("sdate")){ // 시간 추출
-                        System.out.println(1);
                         timeArr[i] = node.getTextContent().substring(8,10);
-                        System.out.println(2);
                         microDust.setRegDate(node.getTextContent());
-                        System.out.println(3);
                     }
 
                     if(node.getNodeName().equals("value")){ // 값 추출
-                        System.out.println(4);
                         contentArr[i] = node.getTextContent();
-                        System.out.println(5);
-                        System.out.println(node.getTextContent());
                         microDust.setValue(node.getTextContent());
-                        System.out.println(6);
                     }
 
                 }
-                schedulerService.create(microDust);
+                microDustService.create(microDust);
             }
 
 
         }catch (Exception e){
             System.out.println("MicroDust 에러 처리 필요");
         }
-
-
-
     }
 
-    @Scheduled(fixedDelay = 86400000) // 하루에 한번씩 갱신
-    public void corona(){
+//    @Scheduled(cron = "0 0 02 * * *") // 새벽 2시에 전일자 계산
+    @Scheduled(fixedDelay = 10000)
+    public void corona() { // Corona Api
+        try{
 
+            String urlStr = "http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=pygR8TY6ssILm9rtlqhq%2BuhPL8jhCkpVKBKWFtg8TPzXmf5cDVqYDbZgp4KkadbTjNd7G1reUFUZjVn8BfPbiQ%3D%3D" +
+                    "&pageNo=1&numOfRows=10&startCreateDt="+now+"&endCreateDt="+now;
+            URL url = new URL(urlStr);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "UTF-8"));
+            String result = "";
+            String line = "";
+
+            while ((line = br.readLine()) != null) {
+                result = result + line + "\n";
+            }
+            System.out.println("Sucress2");
+
+            InputSource is = new InputSource(new StringReader(result));
+
+            builder = factory.newDocumentBuilder();
+            doc = builder.parse(is);
+
+            XPathFactory xpathFactory = XPathFactory.newInstance();
+            XPath xpath = xpathFactory.newXPath();
+            // XPathExpression expr = xpath.compile("/response/body/items/item");
+            XPathExpression expr = xpath.compile("//items/item");
+            NodeList nodeList = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
+
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                NodeList child = nodeList.item(i).getChildNodes();
+                Corona corona = new Corona();
+                for (int j = 0; j < child.getLength(); j++) {
+                    Node node = child.item(j);
+                    corona.setRegDate(now);
+                    corona.setId(Long.valueOf(j));
+
+                    if(node.getNodeName().equals("gubun")){ // 코로나 지역
+                        corona.setRegion(node.getTextContent());
+                    }
+                    if(node.getNodeName().equals("incDec")) { // 코로나 확진자 수
+                        corona.setValue(node.getTextContent());
+                    }
+                }
+                coronaService.create(corona);
+            }
+
+        }catch (Exception e){
+            System.out.println("Corona 에러 처리 필요");
+        }
     }
+
 }

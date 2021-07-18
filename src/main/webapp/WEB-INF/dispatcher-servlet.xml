@@ -53,10 +53,10 @@
 
     <!--  파일업로드 디렉토리 설정 -->
     <bean id="uploadSurveyPath" class="java.lang.String">
-        <constructor-arg value="C:\Users\jins9\OneDrive - 용인대학교\project\2021.07\community_spring\src\main\resources\survey"/>
+        <constructor-arg value="C:\Users\jins9\OneDrive - 용인대학교\project\2021.07\community\src\main\resources\survey"/>
     </bean>
     <!--  파일업로드 디렉토리 설정 -->
     <bean id="uploadPostPath" class="java.lang.String">
-        <constructor-arg value="C:\Users\jins9\OneDrive - 용인대학교\project\2021.07\community_spring\src\main\resources\post"/>
+        <constructor-arg value="C:\Users\jins9\OneDrive - 용인대학교\project\2021.07\community\src\main\resources\post"/>
     </bean>
 </beans>

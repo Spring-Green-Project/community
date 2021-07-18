@@ -201,7 +201,6 @@ public class PostController{
                         contentArr2[i] = node.getTextContent();
                     }
                 }
-
             }
             model.addAttribute("num", contentArr2[contentArr2.length-1]);
             model.addAttribute("day", now);
