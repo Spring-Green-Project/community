@@ -3,7 +3,9 @@ package com.okay.controller;
 import com.okay.domain.entity.Post;
 import com.okay.domain.entity.Survey;
 import com.okay.domain.entity.User;
-import com.okay.dto.*;
+import com.okay.dto.CommentDto;
+import com.okay.dto.PostDto;
+import com.okay.dto.SearchDto;
 import com.okay.service.CommentService;
 import com.okay.service.PostService;
 import com.okay.service.SurveyService;
@@ -245,17 +247,8 @@ public class PostController{
         }catch (Exception e){
             System.out.println("파일 전송 실패");
         }
-        // 0707 수정 시작
-        PostDto dt= new PostDto();
-
-        try{
-            dt.setPostNo(postService.max()+1L);
-        }catch (Exception e){
-            dt.setPostNo(1L);
-        }
 
         PostDto postDto = PostDto.builder()
-                .postNo(dt.getPostNo())
                 .userNo(user)
                 .category(category)
                 .title(title)
@@ -268,7 +261,8 @@ public class PostController{
                 .views(0L)
                 .build();
         postService.create(postDto);
-        return "redirect:/post?postNo="+postDto.getPostNo();
+        Long max = postService.max();
+        return "redirect:/post?postNo="+max;
         // 0707 수정 끝
     }
     @GetMapping("/notice") // 7.2 추가
@@ -330,45 +324,39 @@ public class PostController{
 
 
     @GetMapping("/post")
-    public String post(HttpServletRequest request, Model model, Long postNo,Long presentPage) {
-        HttpSession session = request.getSession();
-        if(presentPage == null){
-            presentPage = 1L;
-        }
-
-        Long userNum = Long.valueOf(String.valueOf(session.getAttribute("userId")));
-        try{
-            Post entity = postService.selectOne(postNo);
-            PostDto post = new PostDto();
-            post = post.changePostDto(entity);
-            post.setViews(entity.getViews()+1L);
-            postService.update(post);
-            model.addAttribute("post", post);
-        }catch (Exception e){
-            return "main";
-        }
+    public String post(Model model, Long postNo){
 
         Post post = postService.selectOne(postNo);
-        System.out.println(post.getFileName());
-        model.addAttribute("img", post.getFileName());
 
-        // 0706 위에 수정
-        List<CommentDto> fullCommentList = commentService.getFullCommentList(postNo);
-        Paging commentPaging = commentService.paging(presentPage, Long.valueOf(fullCommentList.size()));
-        model.addAttribute("commentPaging", commentPaging);
+        // 뷰 수 추가
+        PostDto postDto = new PostDto();
+        postDto = postDto.changePostDto(post);
+        postDto.setViews(post.getViews()+1L);
+        postService.update(postDto);
 
-        if (commentPaging.getTotalElement() > 0) {
-            List<CommentDto> commentList = commentService.getCommentList(fullCommentList, commentPaging);
-            model.addAttribute("commentList", commentList);
-        }
-
-        User user = userService.getUser(userNum);
-        model.addAttribute("userNo", user.getUserNo());
-        model.addAttribute("name", user.getName());
+        model.addAttribute("post", post);
+        model.addAttribute("img", "hello");
         return "post";
     }
 
-    @PostMapping("/edit")
+    @GetMapping("/remove")
+    public String remove(Long postNo){
+        Post post = postService.selectOne(postNo);
+        postService.delete(postNo);
+
+        if(post.getCategory().equals("service")){
+            return "serviceBoard";
+        }else if(post.getCategory().equals("on")){
+            return "noticeBoard";
+        }else{
+            return "board";
+        }
+    }
+
+
+
+
+    @GetMapping("/edit")
     public String edit(Model model,Long postNo) {
         // postNo의 값을 불러오기
         Post post = postService.selectOne(postNo);
@@ -376,6 +364,7 @@ public class PostController{
 
         return "edit";
     }
+
     @PostMapping("/editPost")
     public String editPost(Long postNo, String title,String pw,String category, String name, String content, MultipartFile uploadFile){
         Post post = postService.selectOne(postNo);
@@ -401,29 +390,6 @@ public class PostController{
         return "redirect:/post?postNo="+postDto.getPostNo();
     }
 
-    @PostMapping("/remove")
-    public String delete(Long postNo, String category) {
-        String page = "";
-        if (category.equals("on")) {
-            page = "redirect:/notice";
-        } else if (category.equals("off")) {
-            page = "redirect:/board";
-        } else {
-            page = "redirect:/service";
-        }
-        commentService.deleteAll(postNo);
-        postService.delete(postNo);
-        return page;
-    }
-
-    @PostMapping("/newComment")
-    public String newComment(Long postNo, String name,
-                             String pw, String content, Long userNo) {
-
-        commentService.newComment(postNo, userNo, name, pw, content);
-
-        return "redirect:/post?postNo=" + postNo;
-    }
 
 
     //ajax 댓글 생성
@@ -462,13 +428,6 @@ public class PostController{
             flag = "false";
         }
         return ResponseEntity.ok(flag);
-    }
-
-
-    @PostMapping("/removeComment")
-    public String deleteComment(Long commentNo, Long postNo) {
-        commentService.delete(commentNo);
-        return "redirect:/post?postNo=" + postNo;
     }
 
 

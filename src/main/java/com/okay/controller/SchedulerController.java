@@ -115,7 +115,7 @@ public class SchedulerController { // 정기적으로 반복 작업을 수행하
     }
 
 //    @Scheduled(cron = "0 0 02 * * *") // 새벽 2시에 전일자 계산
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 1000000)
     public void corona() { // Corona Api
         try{
 
