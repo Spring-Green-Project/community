@@ -29,6 +29,7 @@
 <button type="button" id="hit" style="left: 50% ; position: absolute;"><i class="fas fa-heart" id="hitIcon" style="color: #b2b2b2;">
     <span id="hitText" >[[${img.Hit}]]</span>
 </i></button><br>
+    <input type="button" id="listButton" value="목록"/>
     <!-- Reply Form {s} -->
     <div class="my-3 p-3 bg-white rounded shadow-sm" style="padding-top: 10px">
         <form name="form" id="form" role="form" modelAttribute="replyVO" method="post">
@@ -201,7 +202,10 @@
                 return borderColor.color5;
             }
         }
-
+        //목록버튼클릭시 surveyBoard로 이동
+        $('#listButton').click(function (){
+            self.location = "/surveyBoard";
+        })
         $(document).ready(function (){
 
             $("#myChart").click(function (){
