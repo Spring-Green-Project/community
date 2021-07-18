@@ -104,10 +104,11 @@ public class UserController {
 
         //0707 수정 시작
         UserDto dt= new UserDto();
+        dt.setUserNo(userService.max());
         if(dt.getUserNo()== null){
             dt.setUserNo(0L);
         }else{
-            dt.setUserNo(userService.max()+1L);
+            dt.setUserNo(dt.getUserNo()+1L);
         }
         //0707 수정 끝
         UserDto userDto = UserDto.builder()

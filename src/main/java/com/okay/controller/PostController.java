@@ -248,7 +248,15 @@ public class PostController{
             System.out.println("파일 전송 실패");
         }
 
+        PostDto dt = new PostDto();
+        if(postService.max() == null ){
+            dt.setPostNo(1L);
+        } else{
+            dt.setPostNo(postService.max()+1L);
+        }
+
         PostDto postDto = PostDto.builder()
+                .postNo(dt.getPostNo())
                 .userNo(user)
                 .category(category)
                 .title(title)
@@ -325,7 +333,6 @@ public class PostController{
 
     @GetMapping("/post")
     public String post(Model model, Long postNo){
-
         Post post = postService.selectOne(postNo);
 
         // 뷰 수 추가
@@ -334,6 +341,8 @@ public class PostController{
         postDto.setViews(post.getViews()+1L);
         postService.update(postDto);
 
+
+        model.addAttribute("comment",commentService.commentList(post));
         model.addAttribute("post", post);
         model.addAttribute("img", "hello");
         return "post";
@@ -396,10 +405,10 @@ public class PostController{
     @ResponseBody
     @PostMapping("/commentPost")
     public ResponseEntity commentPost(HttpServletRequest request, @Param("postNo")Long postNo, String name
-            ,String pw ,String content, String regDate){
+            ,String content, String regDate){
         HttpSession session = userService.sessionAutowired(request);
         Long userNo = Long.valueOf(String.valueOf(session.getAttribute("userId")));
-        System.out.println(userNo);
+        System.out.println(name);
         System.out.println(content);
         System.out.println(regDate);
         System.out.println();
@@ -419,7 +428,7 @@ public class PostController{
                 .name(name)
                 .content(content)
                 .regDate(now)
-                .pw(pw)
+                .pw(user.getUserPw())
                 .build();
         commentService.create(dto);
         if(dto != null){

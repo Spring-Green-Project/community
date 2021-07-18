@@ -30,4 +30,7 @@ public interface CommentRepository extends JpaRepository<Comment,Long> {
 
     //0706
 
+    //댓글리스트
+    List<Comment> findAllByPostNoOrderByCommentNoDesc(Post postNo);
+
 }

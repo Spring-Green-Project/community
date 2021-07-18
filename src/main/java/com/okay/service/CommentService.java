@@ -160,5 +160,10 @@ public class CommentService extends Service{
         commentRepository.save(comment);
     }
 
+    public List<Comment> commentList(Post postNo){
+        List<Comment> listComment = commentRepository.findAllByPostNoOrderByCommentNoDesc(postNo);
+        return listComment;
+    }
+
 
 }
