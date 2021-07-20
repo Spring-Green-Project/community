@@ -405,13 +405,9 @@ public class PostController{
     @ResponseBody
     @PostMapping("/commentPost")
     public ResponseEntity commentPost(HttpServletRequest request, @Param("postNo")Long postNo, String name
-            ,String content, String regDate){
+            ,String content){
         HttpSession session = userService.sessionAutowired(request);
         Long userNo = Long.valueOf(String.valueOf(session.getAttribute("userId")));
-        System.out.println(name);
-        System.out.println(content);
-        System.out.println(regDate);
-        System.out.println();
         String flag = "";
         User user = userService.selectOne(userNo);
         Post post = postService.selectOne(postNo);

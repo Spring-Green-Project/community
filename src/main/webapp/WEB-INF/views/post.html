@@ -176,8 +176,6 @@
         $("#newCommentButton").click(function (event) {
             let content = $('#newCommentContent').val();
             let name = $('#newCommentNameNm').val();
-            let regDate = new Date();
-            let today = regDate.toLocaleDateString();
             let cnt = 1;
 
             let testString = window.location.href;
@@ -194,7 +192,6 @@
                 "postNo": result,
                 "name": name,
                 "content": content,
-                "regDate": today
             }
             $.ajax({ // 댓글 Server 저장
                 url: "/commentPost",
