@@ -176,6 +176,15 @@
         $("#newCommentButton").click(function (event) {
             let content = $('#newCommentContent').val();
             let name = $('#newCommentNameNm').val();
+            if(content.length < 1){
+                alert('댓글을 입력하세요.')
+                $('#form').preventDefault();
+            }
+            if(name.length<1){
+                alert('닉네임을 입력하세요.')
+                $('#form').preventDefault();
+            }
+
             let cnt = 1;
 
             let testString = window.location.href;
